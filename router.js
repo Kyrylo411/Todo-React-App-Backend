@@ -3,9 +3,9 @@ import TodoItemController from "./TodoItemController.js";
 
 const router = new Router();
 
-router.get("/todoList", TodoItemController.get);
-router.post("/todoList", TodoItemController.create);
-router.put("/todoList", TodoItemController.update);
-router.delete("/todoList/:id", TodoItemController.delete);
+router.get("/GET/todo", TodoItemController.get);
+router.post("/POST/todo", TodoItemController.create);
+router.put("/PUT/todo", TodoItemController.update);
+router.delete("/DELETE/todo/:id", TodoItemController.delete);
 
 export default router;
