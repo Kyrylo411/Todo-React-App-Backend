@@ -18,6 +18,16 @@ class TodoItemService {
     });
     return updatedItem;
   }
+  async updateMany(item) {
+    if (!item) {
+      throw new Error("No Items");
+    }
+    const items = await TodoItem.updateMany(
+      { done: { $eq: true } },
+      { done: false }
+    );
+    return items;
+  }
   async delete(id) {
     if (!id) {
       throw new Error("Id не указан");

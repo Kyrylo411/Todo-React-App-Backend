@@ -25,6 +25,15 @@ class TodoItemController {
       res.status(500).json(e.message);
     }
   }
+  async updateMany(req, res) {
+    try {
+      const updatedItems = await TodoItemService.updateMany(req.body);
+      res.json(updatedItems);
+    } catch (e) {
+      res.status(500).json(e.message);
+    }
+  }
+
   async delete(req, res) {
     try {
       const item = await TodoItemService.delete(req.params.id);
