@@ -3,9 +3,10 @@ import TodoItemController from "./TodoItemController.js";
 
 const router = new Router();
 
-router.get("/GET/todo", TodoItemController.get);
-router.post("/POST/todo", TodoItemController.create);
-router.put("/PUT/todo", TodoItemController.update);
-router.delete("/DELETE/todo/:id", TodoItemController.delete);
+router.get("/todo", TodoItemController.get);
+router.post("/todo", TodoItemController.create);
+router.put("/todo/:id", TodoItemController.update);
+router.delete("/todo/:id", TodoItemController.delete);
+router.delete("/todo", TodoItemController.deleteMany);
 
 export default router;

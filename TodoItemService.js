@@ -9,11 +9,11 @@ class TodoItemService {
     const items = await TodoItem.find();
     return items;
   }
-  async update(item) {
-    if (!item._id) {
+  async update(item, id) {
+    if (!id) {
       throw new Error("Id не указан");
     }
-    const updatedItem = await TodoItem.findByIdAndUpdate(item._id, item, {
+    const updatedItem = await TodoItem.findByIdAndUpdate(id, item, {
       new: true,
     });
     return updatedItem;
@@ -24,6 +24,13 @@ class TodoItemService {
     }
     const item = await TodoItem.findByIdAndDelete(id);
     return item;
+  }
+  async deleteMany(item) {
+    if (!item) {
+      throw new Error("No items");
+    }
+    const items = await TodoItem.deleteMany({ done: { $eq: true } });
+    return items;
   }
 }
 

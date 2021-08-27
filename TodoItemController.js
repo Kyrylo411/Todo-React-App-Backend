@@ -19,7 +19,7 @@ class TodoItemController {
   }
   async update(req, res) {
     try {
-      const updatedItem = await TodoItemService.update(req.body);
+      const updatedItem = await TodoItemService.update(req.body, req.params.id);
       res.json(updatedItem);
     } catch (e) {
       res.status(500).json(e.message);
@@ -29,6 +29,15 @@ class TodoItemController {
     try {
       const item = await TodoItemService.delete(req.params.id);
       res.json(item);
+    } catch (e) {
+      res.status(500).json(e.message);
+    }
+  }
+  async deleteMany(req, res) {
+    console.log(req);
+    try {
+      const deletedItems = await TodoItemService.deleteMany(req.body);
+      res.json(deletedItems);
     } catch (e) {
       res.status(500).json(e.message);
     }
