@@ -18,10 +18,7 @@ class TodoItemService {
     });
     return updatedItem;
   }
-  async updateMany(item) {
-    if (!item) {
-      throw new Error("No Items");
-    }
+  async updateMany() {
     const items = await TodoItem.updateMany(
       { done: { $eq: true } },
       { done: false }
