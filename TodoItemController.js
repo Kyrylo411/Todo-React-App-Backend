@@ -17,6 +17,7 @@ class TodoItemController {
       res.status(500).json(e.message);
     }
   }
+
   async update(req, res) {
     try {
       const updatedItem = await TodoItemService.update(req.body);
