@@ -1,4 +1,4 @@
-import TodoItem from "./TodoItem.js";
+import TodoItem from "../models/TodoItem.js";
 
 class TodoItemService {
   async create(item) {

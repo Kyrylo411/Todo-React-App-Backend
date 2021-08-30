@@ -1,4 +1,4 @@
-import TodoItemService from "./TodoItemService.js";
+import TodoItemService from "../services/TodoItemService.js";
 
 class TodoItemController {
   async create(req, res) {

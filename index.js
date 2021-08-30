@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import router from "./router.js";
+import router from "./routes/router.js";
 
 const PORT = 5000;
 const DB_URL = `mongodb+srv://kyrylo:kyrylo@cluster0.g6fbt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
