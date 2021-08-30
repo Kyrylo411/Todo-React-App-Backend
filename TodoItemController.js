@@ -25,9 +25,12 @@ class TodoItemController {
       res.status(500).json(e.message);
     }
   }
+
   async updateMany(req, res) {
     try {
-      const updatedItems = await TodoItemService.updateMany(req.body);
+      const updatedItems = await TodoItemService.updateMany(
+        req.params.isChecked
+      );
       res.json(updatedItems);
     } catch (e) {
       res.status(500).json(e.message);

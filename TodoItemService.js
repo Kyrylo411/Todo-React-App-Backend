@@ -18,13 +18,24 @@ class TodoItemService {
     });
     return updatedItem;
   }
-  async updateMany() {
-    const items = await TodoItem.updateMany(
-      { done: { $eq: true } },
-      { done: false }
-    );
-    return items;
+
+  async updateMany(isChecked) {
+    if (isChecked === "true") {
+      const items = await TodoItem.updateMany(
+        { done: { $eq: true } },
+        { done: false }
+      );
+      return items;
+    }
+    if (isChecked === "false") {
+      const items = await TodoItem.updateMany(
+        { done: { $eq: false } },
+        { done: true }
+      );
+      return items;
+    }
   }
+
   async delete(id) {
     if (!id) {
       throw new Error("Id не указан");
