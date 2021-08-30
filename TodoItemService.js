@@ -9,11 +9,20 @@ class TodoItemService {
     const items = await TodoItem.find();
     return items;
   }
-  async update(item, id) {
-    if (!id) {
+  // async update(item, id) {
+  //   if (!id) {
+  //     throw new Error("Id не указан");
+  //   }
+  //   const updatedItem = await TodoItem.findByIdAndUpdate(id, item, {
+  //     new: true,
+  //   });
+  //   return updatedItem;
+  // }
+  async update(item) {
+    if (!item._id) {
       throw new Error("Id не указан");
     }
-    const updatedItem = await TodoItem.findByIdAndUpdate(id, item, {
+    const updatedItem = await TodoItem.findByIdAndUpdate(item._id, item, {
       new: true,
     });
     return updatedItem;

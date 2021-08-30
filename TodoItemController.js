@@ -19,7 +19,7 @@ class TodoItemController {
   }
   async update(req, res) {
     try {
-      const updatedItem = await TodoItemService.update(req.body, req.params.id);
+      const updatedItem = await TodoItemService.update(req.body);
       res.json(updatedItem);
     } catch (e) {
       res.status(500).json(e.message);
