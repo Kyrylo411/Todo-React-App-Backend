@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
 
-const TodoItem = new mongoose.Schema({
+export interface ITodoItem {
+  value: string;
+  done: boolean;
+  _id?: string;
+}
+
+const TodoItem = new mongoose.Schema<ITodoItem>({
   value: { type: String, required: true },
   done: { type: Boolean, required: true },
 });

@@ -1,7 +1,8 @@
-import Router from "express";
-import TodoItemController from "../controllers/TodoItemController.js";
+import express from "express";
 
-const router = new Router();
+import TodoItemController from "../controllers/TodoItemController";
+
+const router = express.Router();
 
 router.get("/todo", TodoItemController.get);
 router.post("/todo", TodoItemController.create);

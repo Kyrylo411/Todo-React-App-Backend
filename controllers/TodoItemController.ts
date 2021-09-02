@@ -1,7 +1,8 @@
-import TodoItemService from "../services/TodoItemService.js";
+import TodoItemService from "../services/TodoItemService";
+import { Response, Request } from "express";
 
 class TodoItemController {
-  async create(req, res) {
+  async create(req: Request, res: Response): Promise<void> {
     try {
       const item = await TodoItemService.create(req.body);
       res.json(item);
@@ -9,16 +10,16 @@ class TodoItemController {
       res.status(500).json(e.message);
     }
   }
-  async get(req, res) {
+  async get(req: Request, res: Response): Promise<void> {
     try {
       const items = await TodoItemService.get();
-      return res.json(items);
+      res.json(items);
     } catch (e) {
       res.status(500).json(e.message);
     }
   }
 
-  async update(req, res) {
+  async update(req: Request, res: Response): Promise<void> {
     try {
       const updatedItem = await TodoItemService.update(req.body);
       res.json(updatedItem);
@@ -27,7 +28,7 @@ class TodoItemController {
     }
   }
 
-  async updateMany(req, res) {
+  async updateMany(req: Request, res: Response): Promise<void> {
     try {
       const updatedItems = await TodoItemService.updateMany(
         req.params.isChecked
@@ -38,7 +39,7 @@ class TodoItemController {
     }
   }
 
-  async delete(req, res) {
+  async delete(req: Request, res: Response): Promise<void> {
     try {
       const item = await TodoItemService.delete(req.params.id);
       res.json(item);
@@ -46,7 +47,7 @@ class TodoItemController {
       res.status(500).json(e.message);
     }
   }
-  async deleteMany(req, res) {
+  async deleteMany(req: Request, res: Response): Promise<void> {
     console.log(req);
     try {
       const deletedItems = await TodoItemService.deleteMany(req.body);

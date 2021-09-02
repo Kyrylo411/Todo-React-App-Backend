@@ -1,7 +1,7 @@
-import TodoItem from "../models/TodoItem.js";
+import TodoItem, { ITodoItem } from "../models/TodoItem";
 
 class TodoItemService {
-  async create(item) {
+  async create(item: ITodoItem): Promise<ITodoItem> {
     const createdItem = await TodoItem.create(item);
     return createdItem;
   }
@@ -10,7 +10,7 @@ class TodoItemService {
     return items;
   }
 
-  async update(item) {
+  async update(item: ITodoItem): Promise<ITodoItem> {
     if (!item._id) {
       throw new Error("Id не указан");
     }
@@ -20,7 +20,7 @@ class TodoItemService {
     return updatedItem;
   }
 
-  async updateMany(isChecked) {
+  async updateMany(isChecked: string) {
     if (isChecked === "true") {
       const items = await TodoItem.updateMany(
         { done: { $eq: true } },
@@ -37,14 +37,14 @@ class TodoItemService {
     }
   }
 
-  async delete(id) {
+  async delete(id: string): Promise<ITodoItem> {
     if (!id) {
       throw new Error("Id не указан");
     }
     const item = await TodoItem.findByIdAndDelete(id);
     return item;
   }
-  async deleteMany(item) {
+  async deleteMany(item: ITodoItem[]): Promise<ITodoItem[]> {
     if (!item) {
       throw new Error("No items");
     }
