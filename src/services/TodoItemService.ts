@@ -1,12 +1,17 @@
 import TodoItem, { ITodoItem } from "../models/TodoItem";
 
 class TodoItemService {
-  async create(item: ITodoItem): Promise<ITodoItem> {
-    const createdItem = await TodoItem.create(item);
+  async create(
+    value: string,
+    done: boolean,
+    userId: string
+  ): Promise<ITodoItem> {
+    const createdItem = await TodoItem.create({ value, done, userId });
     return createdItem;
   }
-  async get() {
-    const items = await TodoItem.find();
+
+  async get(userId: string) {
+    const items = await TodoItem.find({ userId });
     return items;
   }
 
@@ -14,23 +19,27 @@ class TodoItemService {
     if (!item._id) {
       throw new Error("Id не указан");
     }
-    const updatedItem = await TodoItem.findByIdAndUpdate(item._id, item, {
-      new: true,
-    });
+    const updatedItem: ITodoItem = await TodoItem.findByIdAndUpdate(
+      item._id,
+      item,
+      {
+        new: true,
+      }
+    );
     return updatedItem;
   }
 
-  async updateMany(isChecked: string) {
+  async updateMany(isChecked: string, userId: string): Promise<ITodoItem[]> {
     if (isChecked === "true") {
       const items = await TodoItem.updateMany(
-        { done: { $eq: true } },
+        { done: { $eq: true }, userId: { $eq: userId } },
         { done: false }
       );
       return items;
     }
     if (isChecked === "false") {
       const items = await TodoItem.updateMany(
-        { done: { $eq: false } },
+        { done: { $eq: false }, userId: { $eq: userId } },
         { done: true }
       );
       return items;
@@ -44,11 +53,15 @@ class TodoItemService {
     const item = await TodoItem.findByIdAndDelete(id);
     return item;
   }
-  async deleteMany(item: ITodoItem[]): Promise<ITodoItem[]> {
+
+  async deleteMany(item: ITodoItem[], userId: string): Promise<ITodoItem[]> {
     if (!item) {
       throw new Error("No items");
     }
-    const items = await TodoItem.deleteMany({ done: { $eq: true } });
+    const items = await TodoItem.deleteMany({
+      done: { $eq: true },
+      userId: { $eq: userId },
+    });
     return items;
   }
 }

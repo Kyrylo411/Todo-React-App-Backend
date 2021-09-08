@@ -4,15 +4,17 @@ import { Response, Request } from "express";
 class TodoItemController {
   async create(req: Request, res: Response): Promise<void> {
     try {
-      const item = await TodoItemService.create(req.body);
+      const { value, done, userId } = req.body;
+      const item = await TodoItemService.create(value, done, userId);
       res.json(item);
     } catch (e) {
       res.status(500).json(e.message);
     }
   }
+
   async get(req: Request, res: Response): Promise<void> {
     try {
-      const items = await TodoItemService.get();
+      const items = await TodoItemService.get(req.body.userId);
       res.json(items);
     } catch (e) {
       res.status(500).json(e.message);
@@ -30,8 +32,10 @@ class TodoItemController {
 
   async updateMany(req: Request, res: Response): Promise<void> {
     try {
+      const { userId } = req.body;
       const updatedItems = await TodoItemService.updateMany(
-        req.params.isChecked
+        req.params.isChecked,
+        userId
       );
       res.json(updatedItems);
     } catch (e) {
@@ -47,10 +51,12 @@ class TodoItemController {
       res.status(500).json(e.message);
     }
   }
+
   async deleteMany(req: Request, res: Response): Promise<void> {
-    console.log(req);
     try {
-      const deletedItems = await TodoItemService.deleteMany(req.body);
+      const { userId } = req.body;
+
+      const deletedItems = await TodoItemService.deleteMany(req.body, userId);
       res.json(deletedItems);
     } catch (e) {
       res.status(500).json(e.message);

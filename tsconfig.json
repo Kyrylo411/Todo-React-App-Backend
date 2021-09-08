@@ -1,11 +1,17 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
-    "outDir": "./dist",
+    "lib": ["es6"],
+    "outDir": "dist",
+    "allowJs": true,
+    "rootDir": "src",
     "baseUrl": ".",
     "module": "commonJS",
     "target": "ES6",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "strict": false,
+    "noImplicitAny": true,
+    "resolveJsonModule": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
