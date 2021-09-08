@@ -15,3 +15,5 @@ todoRouter.put(
 
 todoRouter.delete("/todo/:id", authMiddleware, TodoItemController.delete);
 todoRouter.delete("/todo", authMiddleware, TodoItemController.deleteMany);
+
+export default todoRouter;
