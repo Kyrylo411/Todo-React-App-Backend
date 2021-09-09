@@ -5,7 +5,7 @@ class TodoItemController {
   async create(req: Request, res: Response): Promise<void> {
     try {
       const { value, done, userId } = req.body;
-      const item = await TodoItemService.create(value, done, userId);
+      const item = await TodoItemService.create(value, done, req.params.id);
       res.json(item);
     } catch (e) {
       res.status(500).json(e.message);
@@ -14,7 +14,7 @@ class TodoItemController {
 
   async get(req: Request, res: Response): Promise<void> {
     try {
-      const items = await TodoItemService.get(req.body.userId);
+      const items = await TodoItemService.get(req.params.id);
       res.json(items);
     } catch (e) {
       res.status(500).json(e.message);
@@ -35,7 +35,7 @@ class TodoItemController {
       const { userId } = req.body;
       const updatedItems = await TodoItemService.updateMany(
         req.params.isChecked,
-        userId
+        req.params.id
       );
       res.json(updatedItems);
     } catch (e) {
@@ -54,9 +54,10 @@ class TodoItemController {
 
   async deleteMany(req: Request, res: Response): Promise<void> {
     try {
-      const { userId } = req.body;
-
-      const deletedItems = await TodoItemService.deleteMany(req.body, userId);
+      const deletedItems = await TodoItemService.deleteMany(
+        req.body,
+        req.params.id
+      );
       res.json(deletedItems);
     } catch (e) {
       res.status(500).json(e.message);
