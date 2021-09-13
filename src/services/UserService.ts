@@ -59,7 +59,7 @@ class UserService {
     if (!userData || !tokenFromDB) {
       throw new Error("Пользователь не авторизован");
     }
-    const user = await userModel.findById(userData.id);
+    const user = await userModel.findById(userData._doc._id);
     const tokens = TokenService.generateTokens({ ...user });
     await TokenService.saveToken(user._id, tokens.refreshToken);
 

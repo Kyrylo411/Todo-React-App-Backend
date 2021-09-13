@@ -14,6 +14,7 @@ authRouter.post(
       .isLength({ min: 4, max: 15 })
       .notEmpty(),
   ],
+
   UserController.registrtation
 );
 authRouter.post("/login", UserController.login);
