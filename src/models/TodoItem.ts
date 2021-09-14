@@ -5,13 +5,13 @@ export interface ITodoItem {
   value: string;
   done: boolean;
   _id: ObjectId;
-  userId: string;
+  userId: ObjectId;
 }
 
 const TodoItem = new Schema<ITodoItem>({
   value: { type: String, required: true },
   done: { type: Boolean, required: true, default: false },
-  userId: { type: String, require: true },
+  userId: { type: Schema.Types.ObjectId, require: true, ref: "User" },
 });
 
 export default model("TodoItem", TodoItem);

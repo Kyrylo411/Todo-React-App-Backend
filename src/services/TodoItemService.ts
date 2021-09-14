@@ -1,16 +1,17 @@
+import { ObjectId } from "mongoose";
 import TodoItem, { ITodoItem } from "../models/TodoItem";
 
 class TodoItemService {
   async create(
     value: string,
     done: boolean,
-    userId: string
+    userId: ObjectId
   ): Promise<ITodoItem> {
     const createdItem = await TodoItem.create({ value, done, userId });
     return createdItem;
   }
 
-  async get(userId: string) {
+  async get(userId: ObjectId) {
     const items = await TodoItem.find({ userId });
     return items;
   }
@@ -29,7 +30,7 @@ class TodoItemService {
     return updatedItem;
   }
 
-  async updateMany(isChecked: string, userId: string): Promise<ITodoItem[]> {
+  async updateMany(isChecked: string, userId: ObjectId): Promise<ITodoItem[]> {
     if (isChecked === "true") {
       const items = await TodoItem.updateMany(
         { done: { $eq: true }, userId: { $eq: userId } },
@@ -54,7 +55,7 @@ class TodoItemService {
     return item;
   }
 
-  async deleteMany(item: ITodoItem[], userId: string): Promise<ITodoItem[]> {
+  async deleteMany(item: ITodoItem[], userId: ObjectId): Promise<ITodoItem[]> {
     if (!item) {
       throw new Error("No items");
     }

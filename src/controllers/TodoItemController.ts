@@ -1,20 +1,23 @@
 import TodoItemService from "../services/TodoItemService";
 import { Response, Request } from "express";
+import { PatchedRequest } from "../types/types";
 
 class TodoItemController {
-  async create(req: Request, res: Response): Promise<void> {
+  async create(req: PatchedRequest, res: Response): Promise<void> {
     try {
+      const userId = req.user._id;
       const { value, done } = req.body;
-      const item = await TodoItemService.create(value, done, req.params.id);
+      const item = await TodoItemService.create(value, done, userId);
       res.json(item);
     } catch (e) {
       res.status(500).json(e.message);
     }
   }
 
-  async get(req: Request, res: Response): Promise<void> {
+  async get(req: PatchedRequest, res: Response): Promise<void> {
     try {
-      const items = await TodoItemService.get(req.params.id);
+      const userId = req.user._id;
+      const items = await TodoItemService.get(userId);
       res.json(items);
     } catch (e) {
       res.status(500).json(e.message);
@@ -30,11 +33,12 @@ class TodoItemController {
     }
   }
 
-  async updateMany(req: Request, res: Response): Promise<void> {
+  async updateMany(req: PatchedRequest, res: Response): Promise<void> {
     try {
+      const userId = req.user._id;
       const updatedItems = await TodoItemService.updateMany(
         req.params.isChecked,
-        req.params.id
+        userId
       );
       res.json(updatedItems);
     } catch (e) {
@@ -42,7 +46,7 @@ class TodoItemController {
     }
   }
 
-  async delete(req: Request, res: Response): Promise<void> {
+  async delete(req: PatchedRequest, res: Response): Promise<void> {
     try {
       const item = await TodoItemService.delete(req.params.id);
       res.json(item);
@@ -51,12 +55,10 @@ class TodoItemController {
     }
   }
 
-  async deleteMany(req: Request, res: Response): Promise<void> {
+  async deleteMany(req: PatchedRequest, res: Response): Promise<void> {
     try {
-      const deletedItems = await TodoItemService.deleteMany(
-        req.body,
-        req.params.id
-      );
+      const userId = req.user._id;
+      const deletedItems = await TodoItemService.deleteMany(req.body, userId);
       res.json(deletedItems);
     } catch (e) {
       res.status(500).json(e.message);
