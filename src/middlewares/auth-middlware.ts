@@ -20,7 +20,6 @@ export default function authMiddleware(
     if (!userData) {
       throw new Error("3Пользователь не авторизован");
     }
-    console.log(typeof userData);
     req.user = userData._doc;
     next();
   } catch (e) {

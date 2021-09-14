@@ -4,7 +4,7 @@ import { Response, Request } from "express";
 class TodoItemController {
   async create(req: Request, res: Response): Promise<void> {
     try {
-      const { value, done, userId } = req.body;
+      const { value, done } = req.body;
       const item = await TodoItemService.create(value, done, req.params.id);
       res.json(item);
     } catch (e) {
@@ -32,7 +32,6 @@ class TodoItemController {
 
   async updateMany(req: Request, res: Response): Promise<void> {
     try {
-      const { userId } = req.body;
       const updatedItems = await TodoItemService.updateMany(
         req.params.isChecked,
         req.params.id
