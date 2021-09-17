@@ -3,12 +3,15 @@ import TokenService from "./TokenService";
 import userModel, { IUser } from "../models/User";
 import { IGeneratedTokens, IRegistration } from "../types/types";
 import { JwtPayload } from "jsonwebtoken";
+import ApiError from "../exeptions/api-error";
 
 class UserService {
   async registrtation(login: string, password: string): Promise<IRegistration> {
     const candidate = await userModel.findOne({ login });
     if (candidate) {
-      throw new Error(`Пользователь с именем ${login} уже существует`);
+      throw ApiError.BadRequest(
+        `Пользователь с именем ${login} уже существует`
+      );
     }
     const hashPassword: string = await bcrypt.hash(password, 3);
 
@@ -28,11 +31,11 @@ class UserService {
   async login(login: string, password: string): Promise<IRegistration> {
     const user: IUser = await userModel.findOne({ login });
     if (!user) {
-      throw new Error(`Пользователь с именем ${login} не найден!`);
+      throw ApiError.BadRequest(`Пользователь с именем ${login} не найден!`);
     }
     const isPassEqual: boolean = await bcrypt.compare(password, user.password);
     if (!isPassEqual) {
-      throw new Error(`Введен неверный пароль!`);
+      throw ApiError.BadRequest(`Введен неверный пароль!`);
     }
     const tokens = <IGeneratedTokens>TokenService.generateTokens({ ...user });
     await TokenService.saveToken(user._id, tokens.refreshToken);
@@ -49,13 +52,13 @@ class UserService {
 
   async refresh(refreshToken: string): Promise<IRegistration> {
     if (!refreshToken) {
-      throw new Error("Пользователь не авторизован");
+      throw ApiError.UnautorizedError();
     }
     const userData: JwtPayload =
       TokenService.validateRefreshToken(refreshToken);
     const tokenFromDB = TokenService.findToken(refreshToken);
     if (!userData || !tokenFromDB) {
-      throw new Error("Пользователь не авторизован");
+      throw ApiError.UnautorizedError();
     }
     const user = await userModel.findById(userData._doc._id);
     const tokens = TokenService.generateTokens({ ...user });

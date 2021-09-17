@@ -1,9 +1,9 @@
 import UserService from "../services/UserService";
 import { validationResult } from "express-validator";
-import { Response, Request } from "express";
+import { Response, Request, NextFunction } from "express";
 
 class UserController {
-  async registrtation(req: Request, res: Response) {
+  async registrtation(req: Request, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -17,11 +17,11 @@ class UserController {
       });
       return res.json(userData);
     } catch (e) {
-      res.status(500).json(e);
+      next(e);
     }
   }
 
-  async login(req: Request, res: Response) {
+  async login(req: Request, res: Response, next: NextFunction) {
     try {
       const { login, password } = req.body;
       const userData = await UserService.login(login, password);
@@ -32,22 +32,22 @@ class UserController {
 
       return res.json(userData);
     } catch (e) {
-      res.status(500).json(e);
+      next(e);
     }
   }
 
-  async logout(req: Request, res: Response) {
+  async logout(req: Request, res: Response, next: NextFunction) {
     try {
       const { refreshToken } = req.cookies;
       const token = UserService.logout(refreshToken);
       res.clearCookie("refreshToken");
       return res.json(token);
     } catch (e) {
-      res.status(500).json(e);
+      next(e);
     }
   }
 
-  async refresh(req: Request, res: Response) {
+  async refresh(req: Request, res: Response, next: NextFunction) {
     try {
       const { refreshToken } = req.cookies;
       const userData = await UserService.refresh(refreshToken);
@@ -58,23 +58,16 @@ class UserController {
 
       return res.json(userData);
     } catch (e) {
-      res.status(500).json(e);
+      next(e);
     }
   }
 
-  async getUsers(req: Request, res: Response) {
+  async getUsers(req: Request, res: Response, next: NextFunction) {
     try {
       const users = await UserService.getAllusers();
       return res.json(users);
     } catch (e) {
-      res.status(500).json(e);
-    }
-  }
-
-  async createTodoItem(req: Request, res: Response) {
-    try {
-    } catch (e) {
-      res.status(500).json(e);
+      next(e);
     }
   }
 }

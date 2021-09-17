@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 
 import todoRouter from "./routes/todoRouter";
 import authRouter from "./routes/authRouter";
+import errorMiddleware from "./middlewares/error-middleware";
 
 const PORT: number = 5000;
 const DB_URL: string =
@@ -21,6 +22,7 @@ app.use(
 );
 app.use("/todolist", todoRouter);
 app.use("/auth", authRouter);
+app.use(errorMiddleware);
 
 async function startApp(): Promise<void> {
   try {
