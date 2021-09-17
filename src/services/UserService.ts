@@ -22,7 +22,6 @@ class UserService {
 
     return {
       ...tokens,
-      user,
     };
   }
 
@@ -40,7 +39,6 @@ class UserService {
 
     return {
       ...tokens,
-      user,
     };
   }
 
@@ -65,7 +63,6 @@ class UserService {
 
     return {
       ...tokens,
-      user,
     };
   }
 

@@ -17,7 +17,7 @@ class UserController {
       });
       return res.json(userData);
     } catch (e) {
-      res.status(500).json(e.message);
+      res.status(500).json(e);
     }
   }
 
@@ -32,7 +32,7 @@ class UserController {
 
       return res.json(userData);
     } catch (e) {
-      res.status(500).json(e.message);
+      res.status(500).json(e);
     }
   }
 
@@ -43,7 +43,7 @@ class UserController {
       res.clearCookie("refreshToken");
       return res.json(token);
     } catch (e) {
-      res.status(500).json(e.message);
+      res.status(500).json(e);
     }
   }
 
@@ -58,7 +58,7 @@ class UserController {
 
       return res.json(userData);
     } catch (e) {
-      res.status(500).json(e.message);
+      res.status(500).json(e);
     }
   }
 
@@ -67,14 +67,14 @@ class UserController {
       const users = await UserService.getAllusers();
       return res.json(users);
     } catch (e) {
-      res.status(500).json(e.message);
+      res.status(500).json(e);
     }
   }
 
   async createTodoItem(req: Request, res: Response) {
     try {
     } catch (e) {
-      res.status(500).json(e.message);
+      res.status(500).json(e);
     }
   }
 }

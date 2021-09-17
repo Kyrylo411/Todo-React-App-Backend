@@ -10,15 +10,15 @@ export default function authMiddleware(
   try {
     const authorizationHeader = <string>req.headers.authorization;
     if (!authorizationHeader) {
-      throw new Error("1Пользователь не авторизован");
+      throw new Error("Пользователь не авторизован");
     }
     const accessToken = <string>authorizationHeader.split(" ")[1];
     if (!accessToken) {
-      throw new Error("2Пользователь не авторизован");
+      throw new Error("Пользователь не авторизован");
     }
     const userData = TokenService.validateAccessToken(accessToken);
     if (!userData) {
-      throw new Error("3Пользователь не авторизован");
+      throw new Error("Пользователь не авторизован");
     }
     req.user = userData._doc;
     next();

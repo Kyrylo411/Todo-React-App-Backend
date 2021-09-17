@@ -20,6 +20,6 @@ authRouter.post(
 authRouter.post("/login", UserController.login);
 authRouter.post("/logout", UserController.logout);
 authRouter.get("/refresh", UserController.refresh);
-authRouter.get("/users", authMiddleware, UserController.getUsers);
+// authRouter.get("/users", authMiddleware, UserController.getUsers);
 
 export default authRouter;

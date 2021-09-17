@@ -10,7 +10,7 @@ class TodoItemController {
       const item = await TodoItemService.create(value, done, userId);
       res.json(item);
     } catch (e) {
-      res.status(500).json(e.message);
+      res.status(500).json(e);
     }
   }
 
@@ -20,7 +20,7 @@ class TodoItemController {
       const items = await TodoItemService.get(userId);
       res.json(items);
     } catch (e) {
-      res.status(500).json(e.message);
+      res.status(500).json(e);
     }
   }
 
@@ -29,7 +29,7 @@ class TodoItemController {
       const updatedItem = await TodoItemService.update(req.body);
       res.json(updatedItem);
     } catch (e) {
-      res.status(500).json(e.message);
+      res.status(500).json(e);
     }
   }
 
@@ -42,7 +42,7 @@ class TodoItemController {
       );
       res.json(updatedItems);
     } catch (e) {
-      res.status(500).json(e.message);
+      res.status(500).json(e);
     }
   }
 
@@ -51,7 +51,7 @@ class TodoItemController {
       const item = await TodoItemService.delete(req.params.id);
       res.json(item);
     } catch (e) {
-      res.status(500).json(e.message);
+      res.status(500).json(e);
     }
   }
 
@@ -61,7 +61,7 @@ class TodoItemController {
       const deletedItems = await TodoItemService.deleteMany(req.body, userId);
       res.json(deletedItems);
     } catch (e) {
-      res.status(500).json(e.message);
+      res.status(500).json(e);
     }
   }
 }

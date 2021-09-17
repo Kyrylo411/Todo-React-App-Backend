@@ -13,5 +13,4 @@ export interface IGeneratedTokens {
 export interface IRegistration {
   accessToken: string;
   refreshToken: string;
-  user: IUser;
 }
