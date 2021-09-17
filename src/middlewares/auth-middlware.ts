@@ -1,6 +1,7 @@
 import TokenService from "../services/TokenService";
 import { Response, NextFunction } from "express";
 import { PatchedRequest } from "../types/types";
+import ApiError from "../exeptions/api-error";
 
 export default function authMiddleware(
   req: PatchedRequest,
@@ -10,19 +11,19 @@ export default function authMiddleware(
   try {
     const authorizationHeader = <string>req.headers.authorization;
     if (!authorizationHeader) {
-      throw new Error("Пользователь не авторизован");
+      return next(ApiError.UnautorizedError());
     }
     const accessToken = <string>authorizationHeader.split(" ")[1];
     if (!accessToken) {
-      throw new Error("Пользователь не авторизован");
+      return next(ApiError.UnautorizedError());
     }
     const userData = TokenService.validateAccessToken(accessToken);
     if (!userData) {
-      throw new Error("Пользователь не авторизован");
+      return next(ApiError.UnautorizedError());
     }
     req.user = userData._doc;
     next();
   } catch (e) {
-    next(new Error(e));
+    return next(ApiError.UnautorizedError());
   }
 }

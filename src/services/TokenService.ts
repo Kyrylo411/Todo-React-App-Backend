@@ -7,7 +7,7 @@ import { IGeneratedTokens } from "../types/types";
 class TokenService {
   generateTokens(payload: IUser): IGeneratedTokens {
     const accessToken = jwt.sign(payload, `${process.env.JWT_ACCESS_SECRET}`, {
-      expiresIn: "30m",
+      expiresIn: "10s",
     });
     const refreshToken = jwt.sign(
       payload,
