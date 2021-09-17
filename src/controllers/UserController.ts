@@ -1,13 +1,16 @@
 import UserService from "../services/UserService";
 import { validationResult } from "express-validator";
 import { Response, Request, NextFunction } from "express";
+import ApiError from "../exeptions/api-error";
 
 class UserController {
   async registrtation(req: Request, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        res.status(400).json(errors.array());
+        return next(
+          ApiError.BadRequest("Ошибка при валидации", errors.array() as [])
+        );
       }
       const { login, password } = req.body;
       const userData = await UserService.registrtation(login, password);
